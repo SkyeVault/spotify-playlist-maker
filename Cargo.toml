@@ -1,0 +1,27 @@
+[package]
+name = "spotify_playlist_maker"
+version = "0.1.5"
+edition = "2021"
+authors = ["Lorelei Noble <loreleihnoble@gmail.com>"]
+description = "A Rust package to automate Spotify playlist creation"
+license = "MIT"  # Or another valid license like "Apache-2.0"
+repository = "https://github.com/SkyeVault/Main"
+keywords = ["spotify", "playlist", "automation", "music"]
+categories = ["multimedia", "web-programming"]
+documentation = "https://docs.rs/spotify_playlist_maker"
+
+[lib]
+name = "spotify_playlist_maker"
+path = "src/lib.rs"
+
+[[bin]]
+name = "spotify_playlist_maker"
+path = "src/main.rs"
+
+[dependencies]
+rspotify = { version = "0.12.0", features = ["client-reqwest", "env-file"] }
+tokio = { version = "1", features = ["full"] }
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+dotenv = "0.15"
+tiny_http = "0.12.0"
