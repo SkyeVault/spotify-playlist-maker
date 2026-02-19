@@ -1,5 +1,4 @@
-
-import { invoke } from "@tauri-apps/api/core";
+const { invoke } = window.__TAURI__.core;
 
 const songsEl = document.querySelector("#songs");
 const outEl = document.querySelector("#out");

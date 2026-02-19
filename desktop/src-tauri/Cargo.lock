@@ -3775,6 +3775,7 @@ dependencies = [
 name = "spotifyplaylistmaker"
 version = "0.1.0"
 dependencies = [
+ "open",
  "serde",
  "serde_json",
  "spotify_playlist_maker",
