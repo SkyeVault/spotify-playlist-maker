@@ -56,9 +56,9 @@ fn save_songs(app: tauri::AppHandle, songs: Vec<String>) -> Result<(), String> {
 }
 
 #[tauri::command]
-async fn make_playlist(app: tauri::AppHandle, songs: Vec<String>) -> Result<String, String> {
+async fn make_playlist(app: tauri::AppHandle, playlist_name: String, songs: Vec<String>) -> Result<String, String> {
   save_songs(app, songs.clone())?;
-  spotify_playlist_maker::create_playlist_from_songs(songs).await
+  spotify_playlist_maker::create_playlist_from_songs(playlist_name, songs).await
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]

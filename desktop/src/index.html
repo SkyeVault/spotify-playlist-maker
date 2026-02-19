@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spotify Playlist Maker</title>
     <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="/main.js" defer></script>
+    <script src="/main.js" defer></script>
   </head>
-
   <body>
     <main class="container">
       <header>
         <h1>Spotify Playlist Maker</h1>
-        <p class="subtitle">One song per line. Save, then create.</p>
+        <p class="subtitle">Name your playlist, add songs (one per line), then create.</p>
       </header>
-
       <section class="editor">
-        <label for="songs">Songs</label>
-        <textarea id="songs" rows="12" spellcheck="false"></textarea>
+        <label for="playlist-name">Playlist Name</label>
+        <input id="playlist-name" type="text" placeholder="My Awesome Playlist" />
+
+        <label for="songs" style="margin-top: 16px;">Songs</label>
+        <textarea id="songs" rows="12" spellcheck="false"
+          placeholder="Never Gonna Give You Up Rick Astley&#10;Feeling Good Nina Simone"></textarea>
 
         <div class="row">
           <button id="save" class="secondary" type="button">Save list</button>
           <button id="run" class="primary" type="button">Create playlist</button>
         </div>
       </section>
-
       <section class="status">
         <pre id="out"></pre>
       </section>

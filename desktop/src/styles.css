@@ -77,3 +77,14 @@ pre {
   margin: 0;
   white-space: pre-wrap;
 }
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #2a2a33;
+  background: #15151b;
+  color: #eaeaea;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-bottom: 4px;
+}

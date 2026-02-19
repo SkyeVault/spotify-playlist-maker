@@ -4,12 +4,10 @@ const songsEl = document.querySelector("#songs");
 const outEl = document.querySelector("#out");
 const saveBtn = document.querySelector("#save");
 const runBtn = document.querySelector("#run");
+const nameEl = document.querySelector("#playlist-name");
 
 function parseSongs(text) {
-  return text
-    .split("\n")
-    .map((s) => s.trim())
-    .filter(Boolean);
+  return text.split("\n").map((s) => s.trim()).filter(Boolean);
 }
 
 function setStatus(msg) {
@@ -17,7 +15,7 @@ function setStatus(msg) {
 }
 
 async function loadIntoEditor() {
-  setStatus("Loading songs...");
+  setStatus("Loading saved songs...");
   const songs = await invoke("load_songs");
   songsEl.value = (songs || []).join("\n");
   setStatus("");
@@ -30,7 +28,7 @@ saveBtn.addEventListener("click", async () => {
     await invoke("save_songs", { songs });
     setStatus(`Saved ${songs.length} song(s).`);
   } catch (e) {
-    setStatus(String(e));
+    setStatus("Error: " + String(e));
   }
 });
 
@@ -41,13 +39,13 @@ runBtn.addEventListener("click", async () => {
       setStatus("Add at least one song (one per line).");
       return;
     }
-    setStatus("Creating playlist...");
-    const res = await invoke("make_playlist", { songs });
+    const playlistName = nameEl.value.trim() || "My Playlist";
+    setStatus("Opening Spotify in your browser...\nApprove access, then come back here.");
+    const res = await invoke("make_playlist", { playlistName: playlistName, songs });
     setStatus(res);
   } catch (e) {
-    setStatus(String(e));
+    setStatus("Error: " + String(e));
   }
 });
 
-// boot
-loadIntoEditor().catch((e) => setStatus(String(e)));
+loadIntoEditor().catch((e) => setStatus("Error: " + String(e)));

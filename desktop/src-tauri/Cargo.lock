@@ -3764,6 +3764,7 @@ name = "spotify_playlist_maker"
 version = "0.1.5"
 dependencies = [
  "dotenv",
+ "open",
  "rspotify",
  "serde",
  "serde_json",
