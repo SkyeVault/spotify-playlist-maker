@@ -1279,7 +1279,7 @@ dependencies = [
 
 [[package]]
 name = "spotify_playlist_maker"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "dotenv",
  "open",
