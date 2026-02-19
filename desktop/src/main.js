@@ -1,45 +1,54 @@
-const { invoke } = window.__TAURI__.core;
 
-let greetInputEl;
-let greetMsgEl;
+import { invoke } from "@tauri-apps/api/core";
 
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsgEl.textContent = await invoke("greet", { name: greetInputEl.value });
+const songsEl = document.querySelector("#songs");
+const outEl = document.querySelector("#out");
+const saveBtn = document.querySelector("#save");
+const runBtn = document.querySelector("#run");
+
+function parseSongs(text) {
+  return text
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  greetInputEl = document.querySelector("#greet-input");
-  greetMsgEl = document.querySelector("#greet-msg");
-  document.querySelector("#greet-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    greet();
-  });
-});
-import { invoke } from "@tauri-apps/api/core";
+function setStatus(msg) {
+  outEl.textContent = msg || "";
+}
 
-const btn = document.querySelector("#run");
-const out = document.querySelector("#out");
+async function loadIntoEditor() {
+  setStatus("Loading songs...");
+  const songs = await invoke("load_songs");
+  songsEl.value = (songs || []).join("\n");
+  setStatus("");
+}
 
-btn.addEventListener("click", async () => {
-  out.textContent = "Running...";
+saveBtn.addEventListener("click", async () => {
   try {
-    const res = await invoke("make_playlist");
-    out.textContent = res;
+    setStatus("Saving...");
+    const songs = parseSongs(songsEl.value);
+    await invoke("save_songs", { songs });
+    setStatus(`Saved ${songs.length} song(s).`);
   } catch (e) {
-    out.textContent = String(e);
+    setStatus(String(e));
   }
 });
 
-import { invoke } from "@tauri-apps/api/core";
-
-document.querySelector("#run").addEventListener("click", async () => {
-  const out = document.querySelector("#out");
-  out.textContent = "Running...";
+runBtn.addEventListener("click", async () => {
   try {
-    const res = await invoke("make_playlist");
-    out.textContent = res;
+    const songs = parseSongs(songsEl.value);
+    if (songs.length === 0) {
+      setStatus("Add at least one song (one per line).");
+      return;
+    }
+    setStatus("Creating playlist...");
+    const res = await invoke("make_playlist", { songs });
+    setStatus(res);
   } catch (e) {
-    out.textContent = String(e);
+    setStatus(String(e));
   }
 });
+
+// boot
+loadIntoEditor().catch((e) => setStatus(String(e)));

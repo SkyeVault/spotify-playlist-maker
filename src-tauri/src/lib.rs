@@ -1,6 +1,6 @@
-use tauri::Manager;
-
+cat > ~/GitHub/spotify-playlist-maker/desktop/src-tauri/src/lib.rs <<'EOF'
 use std::{fs, io::Write, path::PathBuf};
+use tauri::Manager;
 
 fn default_songs() -> Vec<String> {
   vec![
@@ -69,3 +69,4 @@ pub fn run() {
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
+EOF

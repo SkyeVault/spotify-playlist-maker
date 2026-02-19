@@ -12,15 +12,17 @@
     <main class="container">
       <header>
         <h1>Spotify Playlist Maker</h1>
-        <p class="subtitle">
-          Create playlists directly from your desktop.
-        </p>
+        <p class="subtitle">One song per line. Save, then create.</p>
       </header>
 
-      <section class="actions">
-        <button id="run" class="primary">
-          Create Playlist
-        </button>
+      <section class="editor">
+        <label for="songs">Songs</label>
+        <textarea id="songs" rows="12" spellcheck="false"></textarea>
+
+        <div class="row">
+          <button id="save" class="secondary" type="button">Save list</button>
+          <button id="run" class="primary" type="button">Create playlist</button>
+        </div>
       </section>
 
       <section class="status">
