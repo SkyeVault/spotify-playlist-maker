@@ -6,6 +6,17 @@ This Rust program automates playlist creation on Spotify using the `rspotify` li
 
 ---
 
+```
+desktop/src/          ← frontend (index.html, main.js, styles.css)
+desktop/src-tauri/    ← Tauri backend
+  src/lib.rs          ← has load_songs, save_songs, make_playlist ✅
+  src/main.rs         ← calls desktop_lib::run() ✅
+  Cargo.toml          ← depends on spotify_playlist_maker = { path = "../.." } ✅
+
+src/lib.rs            ← root library (the Spotify logic lives here)
+src/main.rs           ← CLI
+```
+
 ## Features
 - OAuth2 authentication with Spotify (no need to manually enter tokens)
 - Automated playlist creation
