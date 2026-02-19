@@ -1,7 +1,0 @@
-[dependencies]
-spotify_playlist_maker = { path = ".." }
-dotenvy = "0.15"
-rspotify = { version = "0.13", features = ["client-reqwest", "reqwest-native-tls"] }
-tiny_http = "0.12"
-tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
-open = "5"
