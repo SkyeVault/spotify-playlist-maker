@@ -1,6 +1,6 @@
 [package]
 name = "spotify_playlist_maker"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 authors = ["Lorelei Noble <loreleihnoble@gmail.com>"]
 description = "A Rust package to automate Spotify playlist creation"
