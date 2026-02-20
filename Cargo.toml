@@ -1,11 +1,11 @@
 [package]
 name = "spotify_playlist_maker"
-version = "0.2.3"
+version = "0.2.4"
 edition = "2021"
-authors = ["Lorelei Noble <loreleihnoble@gmail.com>"]
+authors = ["Lorelei Noble <lorelei@arynwood.com>"]
 description = "A Rust package to automate Spotify playlist creation"
-license = "MIT"  # Or another valid license like "Apache-2.0"
-repository = "https://github.com/SkyeVault/Main"
+license = "MIT"
+repository = "https://github.com/SkyeVault/spotify-playlist-maker"
 keywords = ["spotify", "playlist", "automation", "music"]
 categories = ["multimedia", "web-programming"]
 documentation = "https://docs.rs/spotify_playlist_maker"
