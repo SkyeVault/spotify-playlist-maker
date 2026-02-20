@@ -196,3 +196,8 @@ Then try again.
 ![Crates.io](https://img.shields.io/crates/l/spotify_playlist_maker)
 ![Crates.io](https://img.shields.io/crates/v/spotify_playlist_maker)
 ---
+
+
+## Maintained by
+[SkyeVault](https://github.com/SkyeVault)
+
