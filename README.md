@@ -1,103 +1,198 @@
-# Rust Spotify Playlist Maker
+# Spotify Playlist Maker
 
-Rust Program Documentation
+Automate Spotify playlist creation using Rust.
 
-This Rust program automates playlist creation on Spotify using the `rspotify` library. It authenticates users, searches for songs, and creates a playlist with predefined tracks. Version 2.0 has now a user interface.  
+This project includes:
+
+* A CLI tool (published on crates.io)
+* A full Desktop UI built with Tauri
+* OAuth2 authentication with Spotify
+* Automated playlist creation from a song list
 
 ---
 
-```
-desktop/src/          ← frontend (index.html, main.js, styles.css)
-desktop/src-tauri/    ← Tauri backend
-  src/lib.rs          ← has load_songs, save_songs, make_playlist ✅
-  src/main.rs         ← calls desktop_lib::run() ✅
-  Cargo.toml          ← depends on spotify_playlist_maker = { path = "../.." } ✅
+# Overview
 
-src/lib.rs            ← root library (the Spotify logic lives here)
-src/main.rs           ← CLI
+Spotify Playlist Maker allows you to:
+
+* Authenticate securely with Spotify
+* Search for songs
+* Create playlists automatically
+* Manage songs through a desktop interface
+
+The project is structured as:
+
+```
+spotify-playlist-maker/
+│
+├── src/                # Core Spotify logic (library + CLI)
+│
+└── desktop/            # Tauri desktop application
 ```
 
-## Features
-- OAuth2 authentication with Spotify (no need to manually enter tokens)
-- Automated playlist creation
-- Song search and addition
-- Uses `tiny_http` to handle the authentication callback automatically
+---
+
+# CLI Installation (Crates.io)
+
+If you only want the command-line tool:
+
+```
+cargo install spotify_playlist_maker
+```
+
+Verify installation:
+
+```
+spotify_playlist_maker --help
+```
+
+---
+
+# Spotify Developer Setup
+
+1. Visit: [https://developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
+2. Create a new application
+3. Add the following Redirect URI:
+
+```
+http://127.0.0.1:8888/callback
+```
+
+4. Copy your:
+
+   * Client ID
+   * Client Secret
+
+---
+
+# CLI Configuration
+
+Create a `.env` file in the directory where you will run the CLI:
+
+```
+SPOTIFY_CLIENT_ID=your_client_id
+SPOTIFY_CLIENT_SECRET=your_client_secret
+SPOTIFY_REDIRECT_URI=http://127.0.0.1:8888/callback
+SPOTIFY_SCOPES=playlist-modify-public playlist-modify-private user-library-read
+```
+
+Do not wrap values in quotes.
+
+---
+
+# Running the CLI
+
+From the directory containing `.env`:
+
+```
+spotify_playlist_maker
+```
+
+You will:
+
+1. Receive an authorization URL
+2. Open it in your browser
+3. Approve access
+4. The playlist will be created automatically
+
+---
+
+# Desktop Application (Tauri)
+
+The desktop UI is not included in the crates.io binary.
+It requires cloning the repository.
+
+Clone the project:
+
+```
+git clone https://github.com/SkyeVault/spotify-playlist-maker.git
+cd spotify-playlist-maker/desktop
+```
+
+Install Linux dependencies (Ubuntu/Debian):
+
+```
+sudo apt install \
+  libwebkit2gtk-4.1-dev \
+  libgtk-3-dev \
+  libayatana-appindicator3-dev \
+  librsvg2-dev
+```
+
+Run in development mode:
+
+```
+cargo tauri dev
+```
+
+The desktop app allows you to:
+
+* Edit your song list
+* Save songs locally
+* Create playlists from the UI
+
+---
+
+# Building the Desktop App for Distribution
+
+From the `desktop/` directory:
+
+```
+cargo tauri build
+```
+
+Production builds will be generated in:
+
+```
+desktop/src-tauri/target/release/bundle/
+```
+
+You can distribute the generated `.deb`, `.AppImage`, or other platform-specific packages.
+
+---
+
+# Running from Source (CLI)
+
+If you cloned the repository and want to run the CLI version:
+
+```
+cd spotify-playlist-maker
+cargo run
+```
+
+Make sure `.env` exists in the project root.
+
+---
+
+# Troubleshooting
+
+## Port 8888 Already in Use
+
+If you see:
+
+Address already in use
+
+Run:
+
+```
+sudo ss -ltnp | grep ':8888'
+sudo kill <pid>
+```
+
+Then try again.
+
+---
+
+# Built With
+
+* Rust
+* rspotify
+* tiny_http
+* Tauri
+
+---
 
 ![Crates.io](https://img.shields.io/crates/d/spotify_playlist_maker)
 ![Crates.io](https://img.shields.io/crates/l/spotify_playlist_maker)
 ![Crates.io](https://img.shields.io/crates/v/spotify_playlist_maker)
 ---
-
-## Prerequisites
-Before running the program, make sure you have the following installed:
-
-1. **Rust and Cargo** (if not already installed)  
-  ```sh
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  ```
-2. **Spotify Developer Account**  
-  - Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
-  - Create a new app
-  - Add the following **Redirect URIs**:
-    ```
-    http://127.0.0.1:8888/callback
-    http://localhost:8888/callback
-    ```
-  - Copy the **Client ID** and **Client Secret**.
-
----
-
-## Installation and Setup
-
-### Install via Cargo
-https://crates.io/crates/spotify_playlist_maker
-
-### Create a `.env` file for your API credentials
-```sh
-nano .env
-```
-Paste the following into the file:
-```ini
-SPOTIFY_CLIENT_ID="your_client_id_here"
-SPOTIFY_CLIENT_SECRET="your_client_secret_here"
-SPOTIFY_REDIRECT_URI="http://127.0.0.1:8888/callback"
-SPOTIFY_SCOPES="playlist-modify-public playlist-modify-private user-library-read"
-```
-Save the file (`CTRL + X Enter`).
-
----
-
-## Running the Program
-1. **Build and run the program**
-  ```sh
-  cargo run
-  ```
-2. **Follow the authorization link in the terminal**
-3. **Approve the application on Spotify**
-4. **Once approved, the program will automatically create the playlist and add songs**
-
----
-
-## Testing & CI/CD
-
-This project includes:
-- Unit tests for core logic (`cargo test`)
-- Integration tests for API calls
-- GitHub Actions for automated testing on every push
-
-[![Rust CI](https://github.com/SkyeVault/Main/actions/workflows/ci.yml/badge.svg)](https://github.com/SkyeVault/Main/actions/workflows/ci.yml)
-
-## Built With
-- Rust
-- rspotify (Spotify API client)
-- tiny_http (to handle OAuth2 callback)
-
----
-
-## License
-This project is licensed under the MIT License.
-
----
-
-## Maintained by
-[SkyeVault](https://github.com/SkyeVault)
