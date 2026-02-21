@@ -185,7 +185,7 @@ Then try again.
 
 # Built With
 
-* Rust
+* Rust 
 * rspotify
 * tiny_http
 * Tauri
